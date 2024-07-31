@@ -1,7 +1,7 @@
 {
   "name": "@kne/local-storage",
   "version": "0.1.0",
-  "description": "用于存取localStorage数据并进行数据格式转换",
+  "description": "用于存取localStorage数据并进行数据格式转换.",
   "syntax": {
     "esmodules": true
   },
