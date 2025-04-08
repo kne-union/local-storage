@@ -25,7 +25,7 @@ npm i --save @kne/local-storage
 
 - 这里填写示例标题
 - 这里填写示例说明
-- _LocalStorage(@kne/current-lib),antd(antd),remoteLoader(@kne/remote-loader)
+- _LocalStorage(@kne/current-lib_local-storage),antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: localStorage } = _LocalStorage;
