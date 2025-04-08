@@ -1,4 +1,13 @@
 const localStorage = {
+  cache: async (key, getValue, expire = null) => {
+    let value = localStorage.getItem(key);
+    if (value) {
+      return value;
+    }
+    value = await getValue();
+    localStorage.setItem(key, value, expire);
+    return value;
+  },
   getItem: key => {
     const target = window.localStorage.getItem(key);
     try {
