@@ -25,7 +25,7 @@ npm i --save @kne/local-storage
 
 - 这里填写示例标题
 - 这里填写示例说明
-- _LocalStorage(@kne/current-lib),antd(antd),remoteLoader(@kne/remote-loader)
+- _LocalStorage(@kne/current-lib_local-storage),antd(antd),remoteLoader(@kne/remote-loader)
 
 ```jsx
 const { default: localStorage } = _LocalStorage;
@@ -37,68 +37,128 @@ const BaseExample = createWithRemoteLoader({
   const [InfoPage, useConfirmModal] = remoteModules;
   const modal = useConfirmModal();
   const { message } = App.useApp();
-  return <InfoPage>
-    <InfoPage.Part title="数字类型">
-      <Button onClick={() => {
-        localStorage.setItem('__localStorage_test_number', 10);
-        message.success('设置成功');
-      }}>设置值</Button>
-      <Button onClick={() => {
-        modal({
-          type: 'info', message: localStorage.getItem('__localStorage_test_number')
-        });
-      }}>获取值</Button>
-      <Button onClick={() => {
-        localStorage.removeItem('__localStorage_test_number');
-        message.success('删除成功');
-      }}>删除值</Button>
-    </InfoPage.Part>
-    <InfoPage.Part title="字符串类型">
-      <Button onClick={() => {
-        localStorage.setItem('__localStorage_test_string', '我有一直小毛驴我从来也不骑');
-        message.success('设置成功');
-      }}>设置值</Button>
-      <Button onClick={() => {
-        modal({
-          type: 'info', message: localStorage.getItem('__localStorage_test_string')
-        });
-      }}>获取值</Button>
-      <Button onClick={() => {
-        localStorage.removeItem('__localStorage_test_string');
-        message.success('删除成功');
-      }}>删除值</Button>
-    </InfoPage.Part>
-    <InfoPage.Part title="对象类型">
-      <Button onClick={() => {
-        localStorage.setItem('__localStorage_test_object', { message: '我有一直小毛驴我从来也不骑' });
-        message.success('设置成功');
-      }}>设置值</Button>
-      <Button onClick={() => {
-        modal({
-          type: 'info', message: JSON.stringify(localStorage.getItem('__localStorage_test_object'), null, 2)
-        });
-      }}>获取值</Button>
-      <Button onClick={() => {
-        localStorage.removeItem('__localStorage_test_object');
-        message.success('删除成功');
-      }}>删除值</Button>
-    </InfoPage.Part>
-    <InfoPage.Part title="数组类型">
-      <Button onClick={() => {
-        localStorage.setItem('__localStorage_test_array', [{ message: '我有一直小毛驴我从来也不骑' }, { message: '我有一直小毛驴我从来也不骑' }]);
-        message.success('设置成功');
-      }}>设置值</Button>
-      <Button onClick={() => {
-        modal({
-          type: 'info', message: JSON.stringify(localStorage.getItem('__localStorage_test_array'), null, 2)
-        });
-      }}>获取值</Button>
-      <Button onClick={() => {
-        localStorage.removeItem('__localStorage_test_array');
-        message.success('删除成功');
-      }}>删除值</Button>
-    </InfoPage.Part>
-  </InfoPage>;
+  return (
+    <InfoPage>
+      <InfoPage.Part title="数字类型">
+        <Button
+          onClick={() => {
+            localStorage.setItem('__localStorage_test_number', 10);
+            message.success('设置成功');
+          }}>
+          设置值
+        </Button>
+        <Button
+          onClick={() => {
+            modal({
+              type: 'info',
+              message: localStorage.getItem('__localStorage_test_number')
+            });
+          }}>
+          获取值
+        </Button>
+        <Button
+          onClick={() => {
+            localStorage.removeItem('__localStorage_test_number');
+            message.success('删除成功');
+          }}>
+          删除值
+        </Button>
+      </InfoPage.Part>
+      <InfoPage.Part title="字符串类型">
+        <Button
+          onClick={() => {
+            localStorage.setItem('__localStorage_test_string', '我有一直小毛驴我从来也不骑');
+            message.success('设置成功');
+          }}>
+          设置值
+        </Button>
+        <Button
+          onClick={() => {
+            modal({
+              type: 'info',
+              message: localStorage.getItem('__localStorage_test_string')
+            });
+          }}>
+          获取值
+        </Button>
+        <Button
+          onClick={() => {
+            localStorage.removeItem('__localStorage_test_string');
+            message.success('删除成功');
+          }}>
+          删除值
+        </Button>
+      </InfoPage.Part>
+      <InfoPage.Part title="对象类型">
+        <Button
+          onClick={() => {
+            localStorage.setItem('__localStorage_test_object', { message: '我有一直小毛驴我从来也不骑' });
+            message.success('设置成功');
+          }}>
+          设置值
+        </Button>
+        <Button
+          onClick={() => {
+            modal({
+              type: 'info',
+              message: JSON.stringify(localStorage.getItem('__localStorage_test_object'), null, 2)
+            });
+          }}>
+          获取值
+        </Button>
+        <Button
+          onClick={() => {
+            localStorage.removeItem('__localStorage_test_object');
+            message.success('删除成功');
+          }}>
+          删除值
+        </Button>
+      </InfoPage.Part>
+      <InfoPage.Part title="数组类型">
+        <Button
+          onClick={() => {
+            localStorage.setItem('__localStorage_test_array', [{ message: '我有一直小毛驴我从来也不骑' }, { message: '我有一直小毛驴我从来也不骑' }]);
+            message.success('设置成功');
+          }}>
+          设置值
+        </Button>
+        <Button
+          onClick={() => {
+            modal({
+              type: 'info',
+              message: JSON.stringify(localStorage.getItem('__localStorage_test_array'), null, 2)
+            });
+          }}>
+          获取值
+        </Button>
+        <Button
+          onClick={() => {
+            localStorage.removeItem('__localStorage_test_array');
+            message.success('删除成功');
+          }}>
+          删除值
+        </Button>
+      </InfoPage.Part>
+      <InfoPage.Part title="cache 方法">
+        <Button
+          onClick={() => {
+            localStorage
+              .cache('__localStorage_test_cache', () => {
+                message.success('getValue执行');
+                return [{ message: '我有一直小毛驴我从来也不骑' }, { message: '我有一直小毛驴我从来也不骑' }];
+              })
+              .then(value => {
+                modal({
+                  type: 'info',
+                  message: JSON.stringify(value, null, 2)
+                });
+              });
+          }}>
+          设置值
+        </Button>
+      </InfoPage.Part>
+    </InfoPage>
+  );
 });
 
 render(<BaseExample />);
@@ -108,9 +168,10 @@ render(<BaseExample />);
 
 ### API
 
-| 属性名                | 说明               | 类型       | 默认值 |
-|--------------------|------------------|----------|-----|
-| getItem(key)       | 获取localStorage的值 | function |     |
-| setItem(key,value) | 设置localStorage的值 | function |     |
-| removeItem(key)    | 删除localStorage的值 | function |     |
+| 属性名                          | 说明                                                                          | 类型       | 默认值 |
+|------------------------------|-----------------------------------------------------------------------------|----------|-----|
+| getItem(key)                 | 获取localStorage的值                                                            | function |     |
+| setItem(key,value,expire)    | 设置localStorage的值                                                            | function |     |
+| removeItem(key)              | 删除localStorage的值                                                            | function |     |
+| cache(key, getValue, expire) | 如果key已经被设置了value则直接返回value，如果没有呗设置或者已经失效，调用getValue方法获取新的值设置localStorage后返回 | function |     |
 

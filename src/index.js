@@ -1,8 +1,23 @@
 const localStorage = {
+  cache: async (key, getValue, expire = null) => {
+    let value = localStorage.getItem(key);
+    if (value) {
+      return value;
+    }
+    value = await getValue();
+    localStorage.setItem(key, value, expire);
+    return value;
+  },
   getItem: key => {
     const target = window.localStorage.getItem(key);
     try {
-      const { dataType, value } = JSON.parse(target);
+      const { dataType, value, expire } = JSON.parse(target);
+
+      if (expire && Date.now() > expire) {
+        localStorage.removeItem(key);
+        return null;
+      }
+
       if (dataType === 'object' && value === 'null') {
         return null;
       }
@@ -20,9 +35,9 @@ const localStorage = {
       return null;
     }
   },
-  setItem: (key, value) => {
+  setItem: (key, value, expire = null) => {
     const dataType = typeof value;
-    window.localStorage.setItem(key, JSON.stringify({ dataType, value }));
+    window.localStorage.setItem(key, JSON.stringify({ dataType, value, expire }));
   },
   removeItem: key => {
     window.localStorage.removeItem(key);
