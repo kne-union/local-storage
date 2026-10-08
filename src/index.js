@@ -1,3 +1,9 @@
+// Read on every call so the prefix can be injected after this module loads.
+const resolveKey = key => {
+  const prefix = typeof window !== 'undefined' ? window.__LOCAL_STORAGE_PREFIX : null;
+  return prefix ? `${prefix}:${key}` : key;
+};
+
 const localStorage = {
   cache: async (key, getValue, expire = null) => {
     let value = localStorage.getItem(key);
@@ -9,7 +15,7 @@ const localStorage = {
     return value;
   },
   getItem: key => {
-    const target = window.localStorage.getItem(key);
+    const target = window.localStorage.getItem(resolveKey(key));
     try {
       const { dataType, value, expire } = JSON.parse(target);
 
@@ -37,10 +43,10 @@ const localStorage = {
   },
   setItem: (key, value, expire = null) => {
     const dataType = typeof value;
-    window.localStorage.setItem(key, JSON.stringify({ dataType, value, expire }));
+    window.localStorage.setItem(resolveKey(key), JSON.stringify({ dataType, value, expire }));
   },
   removeItem: key => {
-    window.localStorage.removeItem(key);
+    window.localStorage.removeItem(resolveKey(key));
   }
 };
 
